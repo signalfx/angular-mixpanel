@@ -4,15 +4,14 @@
   "private": true,
   "description": "Angular service provider for Mixpanel",
   "keywords": [],
-  "main": "./src/js/module.js",
+  "main": "./src/module.js",
   "devDependencies": {
     "gulp": "^3.8.5",
     "boilerplate-gulp": "^0.1.0",
     "karma": "^0.12.16"
   },
   "directories": {
-    "jsSrc": "./src/js",
-    "cssSrc": "./src/css",
+    "jsSrc": "./src",
     "build": "./build",
     "dist": "./dist",
     "reports": "./reports",
