@@ -8,13 +8,13 @@ describe('analytics.mixpanel', function() {
     provider;
 
   function initHelpers() {
-    var initSpy = jasmine.createSpy();
-
     $window = {
       mixpanel: {
-        init: initSpy
+        init: jasmine.createSpy(),
+        disable: jasmine.createSpy()
       }
     };
+
     $module(function($provide, mixpanelProvider) {
       $provide.value('$window', $window);
       provider = mixpanelProvider;
@@ -22,6 +22,41 @@ describe('analytics.mixpanel', function() {
 
     inject(function() {}); // Forces evalutation for $module
   }
+
+  describe('disabling', function(){
+    beforeEach($module('analytics.mixpanel'));
+    beforeEach(initHelpers);
+
+    it('can disable individual events', function(){
+      provider.disable(['test']);
+      provider.$get($window);
+      
+      expect($window.mixpanel.disable).toHaveBeenCalledWith(['test']);
+    });
+
+    it('can collect multiple calls to disable individual events', function(){
+      provider.disable(['test1']);
+      provider.disable(['test2']);
+      provider.$get($window);
+      
+      expect($window.mixpanel.disable).toHaveBeenCalledWith(['test1', 'test2']);
+    });
+
+    it('can disable all events', function(){
+      provider.disable();
+      provider.$get($window);
+      
+      expect($window.mixpanel.disable).toHaveBeenCalledWith();
+    });
+
+    it('prefers disabling all events rather than indivudal events', function(){
+      provider.disable(['test']);
+      provider.disable();
+      provider.$get($window);
+      
+      expect($window.mixpanel.disable).toHaveBeenCalledWith();
+    });
+  });
 
   describe('when a mixpanel instance already exists', function() {
     beforeEach($module('analytics.mixpanel'));

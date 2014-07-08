@@ -56,6 +56,12 @@ angular.module('myApp', ['analytics.mixpanel'])
 		
 		// Optional. A namespace for mixpane instances, "angular" by default.
 		mixpanelProvider.libraryName = 'My Library';
+
+		// Optional. Disable individual events upon initialization
+		mixpanelProvider.disable(['myEvent']);
+
+		// Optional. Disable all events.
+		mixpanelProvider.disable();
 	});
 ```
 
