@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
-  boilerplate = require('boilerplate-gulp');
+  boilerplate = require('boilerplate-gulp-angular');
 
 boilerplate(gulp, {
-  pkg: require('./package.json')
+  pkg: require('./package.json'),
+  karmaConfig: require('./dev/karmaConfig'),
+  disableCss: true
 });

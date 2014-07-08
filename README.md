@@ -1,14 +1,42 @@
-# Client-side Seed
+# Mixpanel for Angular
+(not from the Mixpanel or Angular team)
 
-A very thin on top of [boilerplate-gulp](https://github.com/oztu/boilerplate-gulp) 
-to seed client-side packages by forking and modifying.
+A thin wrapper for including Mixpanel into Angular applications. 
 
-Update the package.json, then run `gulp dev` to get started. A server will start listening on
-port 3000 and serve the contents of `example` and `build`. Any changes you make within src/js
-or src/css will trigger an incremental rebuild and refresh of any connected browsers. src/js
-files are bundled via browserify and src/css files are processed by LESS.
+## Use
+Include the [Mixpanel snippet](https://mixpanel.com/help/reference/javascript)
+on your page as usual. Then add this module to your scripts bundle, declare
+your dependency to `analytics.mixpanel` and then you'll be inject the `mixpanel`
+service whereever you please. Here's an example:
 
-When you're ready to create a distributable artifact, run `gulp dist`. This will generate
-minified and optimized versions of the source files in to the /dist/ directory.
+```javascript
+angular.module('myApp', ['analytics.mixpanel'])
+	.run(function(mixpanel){
+		mixpanel.track('Loaded app');
+	})
+	.controller('myController', function(mixpanel){
+		mixpanel.track('Clicked Ad', { "Banner Color": "Blue" });
+	});
+```
 
-See [boilerplate-gulp](https://github.com/oztu/boilerplate-gulp) for additional tasks.
+## Configuration
+No configuration is required by default, but for advanced usecases it may be
+useful.
+
+By default, the service will pick up and use the global mixpanel object. However
+if you want to isolate the angular mixpanel instance from the global one, you
+can do so by configuring the `token` property of the provider, like so:
+
+```javascript
+angular.module('myApp', ['analytics.mixpanel'])
+	.config(function(mixpanelProvider){
+		// The Mixpanel API token.
+		mixpanelProvider.token = 'my token';
+
+		// Optional. A Mixpanel init config object.
+		mixpanelProvider.config = {};
+		
+		// Optional. A namespace for mixpane instances, "angular" by default.
+		mixpanelProvider.libraryName = 'My Library';
+	});
+```

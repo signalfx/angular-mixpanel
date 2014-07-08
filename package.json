@@ -1,13 +1,14 @@
 {
-  "name": "seed",
-  "version": "0.0.0",
+  "name": "angular-mixpanel",
+  "version": "0.1.0",
   "private": true,
-  "description": "",
+  "description": "Angular service provider for Mixpanel",
   "keywords": [],
-  "main": "./src/js/seed.js",
+  "main": "./src/js/module.js",
   "devDependencies": {
     "gulp": "^3.8.5",
-    "boilerplate-gulp": "^0.1.0"
+    "boilerplate-gulp": "^0.1.0",
+    "karma": "^0.12.16"
   },
   "directories": {
     "jsSrc": "./src/js",
@@ -19,7 +20,9 @@
     "example": "./example"
   },
   "scripts": {
-    "test": "exit 1"
+    "prepublish": "node ./node_modules/gulp/bin/gulp.js",
+    "test": "node ./node_modules/gulp/bin/gulp.js test",
+    "start": "node ./node_modules/gulp/bin/gulp.js dev"
   },
   "author": {
     "name": "Ozan Turgut",
@@ -29,15 +32,15 @@
   "licenses": [
     {
       "type": "Apache License 2.0",
-      "url": "https://github.com/seed/blob/master/LICENSE-APACHE2"
+      "url": "https://github.com/signalfuse/angular-mixpanel/blob/master/LICENSE-APACHE2"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/seed.git"
+    "url": "git://github.com/signalfuse/angular-mixpanel.git"
   },
   "bugs": {
-    "url": "https://github.com/seed/issues"
+    "url": "https://github.com/signalfuse/angular-mixpanel/issues"
   },
-  "homepage": "https://github.com/seed"
+  "homepage": "https://github.com/signalfuse/angular-mixpanel"
 }
