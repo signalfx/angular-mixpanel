@@ -11,6 +11,7 @@ describe('analytics.mixpanel', function() {
     $window = {
       mixpanel: {
         init: jasmine.createSpy(),
+        track: jasmine.createSpy(),
         disable: jasmine.createSpy()
       }
     };
@@ -22,6 +23,26 @@ describe('analytics.mixpanel', function() {
 
     inject(function() {}); // Forces evalutation for $module
   }
+
+  describe('method delegation', function(){
+    beforeEach($module('analytics.mixpanel'));
+    beforeEach(initHelpers);
+
+    it('delegates calls to the current mixpanel object', function(){
+      var mixpanel = provider.$get($window);
+      var oldMixpanelInstance = $window.mixpanel;
+
+      // Overwrite the global reference to mixpanel.
+      $window.mixpanel = {
+        track: jasmine.createSpy()
+      };
+
+      mixpanel.track('event');
+
+      expect(oldMixpanelInstance.track).not.toHaveBeenCalled();
+      expect($window.mixpanel.track).toHaveBeenCalledWith('event');
+    });
+  });
 
   describe('disabling', function(){
     beforeEach($module('analytics.mixpanel'));
@@ -64,14 +85,15 @@ describe('analytics.mixpanel', function() {
 
     it('can be passed explicitly during configuration', function() {
       var mixpanelInstance = {
-        init: jasmine.createSpy()
+        track: jasmine.createSpy()
       };
       provider.mixpanel(mixpanelInstance);
 
       var mixpanel = provider.$get($window);
-
+      mixpanel.track('event');
       expect($window.mixpanel.init).not.toHaveBeenCalled();
-      expect(mixpanel).toBe(mixpanelInstance);
+      expect($window.mixpanel.track).not.toHaveBeenCalled();
+      expect(mixpanelInstance.track).toHaveBeenCalledWith('event');
     });
   });
 
@@ -81,7 +103,8 @@ describe('analytics.mixpanel', function() {
 
     it('returns the global instance if no token is provided', function() {
       var result = provider.$get($window);
-      expect(result).toBe($window.mixpanel);
+      result.track('event');
+      expect($window.mixpanel.track).toHaveBeenCalledWith('event');
     });
 
     it('returns a new instance if a token is provided', function() {

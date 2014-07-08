@@ -1,6 +1,8 @@
 'use strict';
 /* global angular */
 
+var createMixpanelDelegator = require('./createMixpanelDelegator');
+
 angular.module('analytics.mixpanel', [])
   .directive('mixpanelTrackClick', function(mixpanel) {
     return {
@@ -60,9 +62,9 @@ angular.module('analytics.mixpanel', [])
           // and pass the handler for it.
           $window.mixpanel.init(this.token, this.config, this.libraryName);
 
-          mixpanelInstance = $window.mixpanel[this.libraryName];
+          mixpanelInstance = createMixpanelDelegator($window, this.libraryName);
         } else {
-          mixpanelInstance = $window.mixpanel;
+          mixpanelInstance = createMixpanelDelegator($window);
         }
       }
 
