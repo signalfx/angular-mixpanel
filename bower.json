@@ -1,16 +1,19 @@
 {
-  "name": "client-side-seed",
+  "name": "angular-mixpanel",
   "private": true,
-  "version": "0.0.1",
-  "description": "",
-  "keywords": [],
-  "main": [
-    "dist/client-side-seed.css",
-    "dist/client-side-seed.js"
+  "version": "0.1.0",
+  "description": "Angular service provider for Mixpanel",
+  "keywords": [
+    "angular",
+    "mixpanel",
+    "analytics"
   ],
-  "homepage": "https://github.com/oztu/client-side-seed",
+  "main": [
+    "dist/angular-mixpanel.js"
+  ],
+  "homepage": "https://github.com/signalfuse/angular-mixpanel",
   "authors": [
-    "Ozan Turgut <ozanturgut@gmail.com>"
+    "Ozan Turgut <ozan@signalfuse.com>"
   ],
   "moduleType": [
     "amd",
@@ -25,13 +28,12 @@
     "example",
     "src",
     "build",
-    "package.json",
     "gulpfile.js",
     "package.json"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:oztu/client-side-seed.git"
+    "url": "git@github.com:signalfuse/angular-mixpanel.git"
   },
   "dependencies": {},
   "devDependencies": {
