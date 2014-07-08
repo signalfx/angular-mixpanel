@@ -69,7 +69,8 @@ angular.module('analytics.mixpanel', [])
       }
 
       if(disabled){
-        mixpanelInstance.disable();
+        // Create a mock (noop) instance of the mixpanel API
+        mixpanelInstance = createMixpanelDelegator($window, undefined, true);
       } else if (disabledEvents){
         mixpanelInstance.disable(disabledEvents);
       }

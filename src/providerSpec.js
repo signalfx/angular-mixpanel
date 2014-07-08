@@ -12,7 +12,10 @@ describe('analytics.mixpanel', function() {
       mixpanel: {
         init: jasmine.createSpy(),
         track: jasmine.createSpy(),
-        disable: jasmine.createSpy()
+        disable: jasmine.createSpy(),
+        people: {
+          set: jasmine.createSpy()
+        }
       }
     };
 
@@ -65,17 +68,23 @@ describe('analytics.mixpanel', function() {
 
     it('can disable all events', function(){
       provider.disable();
-      provider.$get($window);
+      var mixpanel = provider.$get($window);
       
-      expect($window.mixpanel.disable).toHaveBeenCalledWith();
+      mixpanel.track('event');
+      mixpanel.people.set('name', 'bob');
+      expect($window.mixpanel.track).not.toHaveBeenCalled();
+      expect($window.mixpanel.people.set).not.toHaveBeenCalled();
     });
 
-    it('prefers disabling all events rather than indivudal events', function(){
+    it('prefers disabling all events rather than individual events', function(){
       provider.disable(['test']);
       provider.disable();
-      provider.$get($window);
+      var mixpanel = provider.$get($window);
       
-      expect($window.mixpanel.disable).toHaveBeenCalledWith();
+      mixpanel.track('event');
+      mixpanel.people.set('name', 'bob');
+      expect($window.mixpanel.track).not.toHaveBeenCalled();
+      expect($window.mixpanel.people.set).not.toHaveBeenCalled();
     });
   });
 

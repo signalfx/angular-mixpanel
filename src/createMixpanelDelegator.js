@@ -5,11 +5,13 @@
   object bound to the window at call-time, ensuring the calls go to the right
   place.
 */
-module.exports = function createMixpanelDelegator($window, instanceName) {
+module.exports = function ($window, instanceName, disabled) {
   function getMixpanelInstance() {
     if(!instanceName) return $window.mixpanel;
     return $window.mixpanel[instanceName];
   }
+
+  function noop(){}
 
   var methods = [
     'init',
@@ -42,6 +44,8 @@ module.exports = function createMixpanelDelegator($window, instanceName) {
   var api = {};
   methods.forEach(function(methodName){
     api[methodName] = function() {
+      if(disabled) return noop;
+
       var mixpanel = getMixpanelInstance();
       return mixpanel[methodName].apply(mixpanel, arguments);
     };
@@ -50,6 +54,8 @@ module.exports = function createMixpanelDelegator($window, instanceName) {
   api.people = {};
   peopleMethods.forEach(function(methodName){
     api.people[methodName] = function(){
+      if(disabled) return noop;
+      
       var mixpanel = getMixpanelInstance();
       return mixpanel.people[methodName].apply(mixpanel.people, arguments);
     };

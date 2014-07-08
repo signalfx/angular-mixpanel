@@ -3,7 +3,7 @@
 
 A thin wrapper for including Mixpanel into Angular applications. 
 
-## Use
+## Usage
 Include the [Mixpanel snippet](https://mixpanel.com/help/reference/javascript)
 on your page as usual. Then add this module to your scripts bundle, declare
 your dependency to `analytics.mixpanel` and then inject the `mixpanel` service 
@@ -60,7 +60,9 @@ angular.module('myApp', ['analytics.mixpanel'])
 		// Optional. Disable individual events upon initialization
 		mixpanelProvider.disable(['myEvent']);
 
-		// Optional. Disable all events.
+		// Optional. *All* calls to the injected mixpanel instance will be 
+		// noops. This is unlike mixpanel.disable, which only disables event
+		// but still collect people data.
 		mixpanelProvider.disable();
 	});
 ```
