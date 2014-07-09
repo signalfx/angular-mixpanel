@@ -46,25 +46,33 @@ angular.module('analytics.mixpanel', [])
       }
     };
 
-    this.$get = function($window) {
+    this.$get = function($window, $log) {
       // If no mixpanel instance was passed into this provider, then
       // we'll create a new instance from the global mixpanel object.
       // This ensures we don't overwrite existing mixpanel deployments.
       if (!mixpanelInstance) { 
         if (!$window.mixpanel) {
-          throw new Error('Unable to find mixpanel, is the tag ' +
-            'included in the page?');
-        }
+          $log.warn('Unable to find mixpanel, is the tag included in the' +
+            'page?');
 
-        // If no token is passed, use the existing global mixpanel instance
-        if (this.token) {
-          // If a token is passed, then create a new mixpanel insteance
-          // and pass the handler for it.
-          $window.mixpanel.init(this.token, this.config, this.libraryName);
-
-          mixpanelInstance = createMixpanelDelegator($window, this.libraryName);
+          // When no mixpanel instance is found on the window, create
+          // a mock mixpanel object so that calls to the api don't error.
+          $window.mixpanel = {
+            people: {}
+          };
+          
+          disabled = true;
         } else {
-          mixpanelInstance = createMixpanelDelegator($window);
+          // If no token is passed, use the existing global mixpanel instance
+          if (this.token) {
+            // If a token is passed, then create a new mixpanel insteance
+            // and pass the handler for it.
+            $window.mixpanel.init(this.token, this.config, this.libraryName);
+
+            mixpanelInstance = createMixpanelDelegator($window, this.libraryName);
+          } else {
+            mixpanelInstance = createMixpanelDelegator($window);
+          }
         }
       }
 
