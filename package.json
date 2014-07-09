@@ -1,6 +1,6 @@
 {
   "name": "angular-mixpanel",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "description": "Angular service provider for Mixpanel",
   "keywords": [],

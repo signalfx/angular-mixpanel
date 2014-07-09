@@ -56,12 +56,12 @@ angular.module('analytics.mixpanel', [])
             'page?');
 
           // When no mixpanel instance is found on the window, create
-          // a mock mixpanel object so that calls to the api don't error.
-          $window.mixpanel = {
-            people: {}
-          };
-          
-          disabled = true;
+          // a mock mixpanel object so that calls to the api don't error.         
+          mixpanelInstance = createMixpanelDelegator({
+            mixpanel: {
+              people: {}
+            }
+          }, undefined, true);
         } else {
           // If no token is passed, use the existing global mixpanel instance
           if (this.token) {
