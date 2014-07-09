@@ -1,7 +1,7 @@
 /* Mixpanel dynamically rewrites it's object bound to the window upon loading
   from the CDN origin. This means that if a reference to the mixpanel object
   is acquired prior to the mixpanel script loading, it becomes stale. This
-  factory creates an api which dispatches the call to the currnet mixpanel
+  factory creates an api which dispatches the call to the current mixpanel
   object bound to the window at call-time, ensuring the calls go to the right
   place.
 */
@@ -42,6 +42,7 @@ module.exports = function ($window, instanceName, disabled) {
   ];
 
   var api = {};
+
   methods.forEach(function(methodName){
     api[methodName] = function() {
       if(disabled) return noop;
