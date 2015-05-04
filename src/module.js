@@ -46,7 +46,7 @@ angular.module('analytics.mixpanel', [])
       }
     };
 
-    this.$get = function($window, $log) {
+    this.$get = ['$window', '$log', function($window, $log) {
       // If no mixpanel instance was passed into this provider, then
       // we'll create a new instance from the global mixpanel object.
       // This ensures we don't overwrite existing mixpanel deployments.
@@ -84,5 +84,5 @@ angular.module('analytics.mixpanel', [])
       }
 
       return mixpanelInstance;
-    };
+    }];
   });
