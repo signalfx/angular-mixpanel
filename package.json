@@ -1,13 +1,14 @@
 {
   "name": "angular-mixpanel",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "description": "Angular service provider for Mixpanel",
   "keywords": [],
   "main": "./src/module.js",
   "devDependencies": {
+    "boilerplate-gulp": "0.1.0",
+    "boilerplate-gulp-angular": "^0.3.0",
     "gulp": "^3.8.5",
-    "boilerplate-gulp": "^0.1.0",
     "karma": "^0.12.16"
   },
   "directories": {

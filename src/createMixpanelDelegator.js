@@ -1,3 +1,5 @@
+'use strict';
+
 /* Mixpanel dynamically rewrites it's object bound to the window upon loading
   from the CDN origin. This means that if a reference to the mixpanel object
   is acquired prior to the mixpanel script loading, it becomes stale. This
@@ -56,7 +58,7 @@ module.exports = function ($window, instanceName, disabled) {
   peopleMethods.forEach(function(methodName){
     api.people[methodName] = function(){
       if(disabled) return noop;
-      
+
       var mixpanel = getMixpanelInstance();
       return mixpanel.people[methodName].apply(mixpanel.people, arguments);
     };
