@@ -4,7 +4,7 @@
 var createMixpanelDelegator = require('./createMixpanelDelegator');
 
 angular.module('analytics.mixpanel', [])
-  .directive('mixpanelTrackClick', function(mixpanel) {
+  .directive('mixpanelTrackClick', ['mixpanel', function(mixpanel) {
     return {
       restrict: 'A',
       scope: {
@@ -21,7 +21,7 @@ angular.module('analytics.mixpanel', [])
         });
       }
     };
-  })
+  }])
   .provider('mixpanel', function() {
     var mixpanelInstance, disabledEvents, disabled;
 
@@ -50,13 +50,13 @@ angular.module('analytics.mixpanel', [])
       // If no mixpanel instance was passed into this provider, then
       // we'll create a new instance from the global mixpanel object.
       // This ensures we don't overwrite existing mixpanel deployments.
-      if (!mixpanelInstance) { 
+      if (!mixpanelInstance) {
         if (!$window.mixpanel) {
           $log.warn('Unable to find mixpanel, is the tag included in the' +
             'page?');
 
           // When no mixpanel instance is found on the window, create
-          // a mock mixpanel object so that calls to the api don't error.         
+          // a mock mixpanel object so that calls to the api don't error.
           mixpanelInstance = createMixpanelDelegator({
             mixpanel: {
               people: {}
